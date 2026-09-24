@@ -1,6 +1,8 @@
 import { ogImage, ogSize } from "@/lib/og"
 import { docsPages } from "@/lib/site"
 
+export const dynamic = "force-static"
+
 export const alt = "The Morph UI agent skill"
 export const size = ogSize
 export const contentType = "image/png"

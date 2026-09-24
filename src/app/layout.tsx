@@ -26,7 +26,6 @@ export const metadata: Metadata = {
     "Tailwind CSS",
     "Next.js",
   ],
-  icons: { icon: "/favicon.svg" },
   openGraph: {
     type: "website",
     siteName: site.name,

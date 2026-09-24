@@ -28,3 +28,6 @@ dist-ssr
 out
 next-env.d.ts
 *.tsbuildinfo
+
+# Cloudflare
+.wrangler

@@ -1,6 +1,8 @@
 import { entries } from "@/lib/entries"
 import { ogImage, ogSize } from "@/lib/og"
 
+export const dynamic = "force-static"
+
 export const alt = "Morph UI component"
 export const size = ogSize
 export const contentType = "image/png"

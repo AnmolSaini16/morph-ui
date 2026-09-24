@@ -81,6 +81,7 @@ These are the product. Rules:
 - Page changes blur through `PageTransition` (`src/components/docs/page-transition.tsx`), rendered in the docs shell around the page. It's a `<ViewTransition>` keyed by `usePathname()`, so every route change at any depth swaps the page, with one `name` and `share="vt-blur"` so the old and new page pair into a single crossfade (a separate exit and enter would overlap without `plus-lighter` and dip). Don't use `app/template.tsx` for this; a template only re-mounts when its own segment changes, so nested routes wouldn't animate.
 - `DocsLink` in `src/components/docs/navigation.tsx` only moves the sidebar highlight instantly.
 - Theme: `next-themes` in `src/components/theme-provider.tsx`, plus a D-key shortcut.
+- The site is a static export (`output: "export"`) deployed to Cloudflare Workers static assets (`wrangler.jsonc`, `public/_headers`). Nothing may need a server: metadata routes (OG images, sitemap, robots) export `dynamic = "force-static"`, and extensionless image routes get their `Content-Type` from `public/_headers`. Absolute URLs come from `NEXT_PUBLIC_SITE_URL` in `src/lib/site.ts`.
 - Installation is manual: copy Component, its generated CSS, and Usage from one page. The full `morph.css` is optional for multi-component installs. `src/lib/component-css.ts` declares style dependencies and generates snippets from the canonical stylesheet. No shadcn registry yet.
 - The shadcn CLI sometimes adds a bogus `cn` package and `from "cn"` imports when adding UI components; rewrite them to `@/lib/utils` and uninstall it.
 

@@ -24,6 +24,14 @@ npm install
 npm run dev
 ```
 
+## Deploy
+
+The site is a static export (`output: "export"`), served from `out/` by Cloudflare Workers static assets (`wrangler.jsonc`). In the Cloudflare dashboard, import the repository and set:
+
+- Build command: `npm run build`
+- Deploy command: `npx wrangler deploy`
+- Build variable: `NEXT_PUBLIC_SITE_URL`, your site's URL, used for canonical links, OG images and the sitemap
+
 ## Structure
 
 - `src/registry/` — the components, one `.tsx` file each, written with plain elements and Tailwind classes.
