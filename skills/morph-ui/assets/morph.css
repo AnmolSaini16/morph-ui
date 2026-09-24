@@ -1,0 +1,598 @@
+/* ─────────────────────────────────────────────────────────────
+   Morph UI
+   A small set of view transition classes. Copy this file next to
+   globals.css and import it after Tailwind:  @import "./morph.css";
+
+   Give the classes to React's <ViewTransition> and combine them:
+     <ViewTransition update="vt-move vt-shell">
+     <ViewTransition share="vt-morph vt-text">
+     update={{ "nav-forward": "vt-push vt-clip vt-forward", default: "none" }}
+
+   Use the CSS tab on a component page for only its required rules.
+   Tune everything through the settings below.
+   ───────────────────────────────────────────────────────────── */
+
+/* ── Settings ─────────────────────────────────────────────────
+
+   Every setting is written where it's used, with its default:
+   var(--vt-move, 420ms). Nothing is declared on your :root, so set
+   any of them anywhere in your CSS, in any order:
+
+     :root { --vt-move: 300ms; }
+
+   --vt-exit             150ms   old content leaving
+   --vt-enter            210ms   new content arriving
+   --vt-enter-delay       90ms   when new content starts, once the old is mostly gone
+   --vt-move             420ms   moves and resizes
+   --vt-slow             480ms   big shape changes (vt-slow)
+   --vt-stagger           35ms   step between vt-delay-* classes
+   --vt-ease             cubic-bezier(0.32, 0.72, 0, 1)
+   --vt-ease-out         cubic-bezier(0.33, 1, 0.68, 1)   crossfades: starts at once, spreads the change out
+   --vt-bounce           a soft overshoot for vt-pop and vt-spring
+   --vt-radius           calc(var(--radius) * 1.4)   card corners while animating
+   --vt-surface          var(--card)                 card surface while animating
+   --vt-ring             10% of --foreground         card ring while animating
+   --vt-inverse          var(--foreground)           vt-inverse pill: dark in light mode, light in dark mode
+   --vt-inverse-radius   32px
+   --vt-swipe-travel     calc(100% + 1.5rem)         one width plus a gap
+   --vt-swipe-duration   300ms
+   --vt-swipe-ease       cubic-bezier(0.25, 1, 0.5, 1)   fast start, lands without creeping
+   --vt-push-duration    300ms
+   --vt-push-ease        cubic-bezier(0.3, 0.7, 0.1, 1)  iOS-like push and pop
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  view-transition-name: none;
+}
+
+::view-transition {
+  pointer-events: none;
+}
+
+/* ── Motion ──────────────────────────────────────────────────── */
+
+::view-transition-group(.vt-move),
+::view-transition-group(.vt-morph),
+::view-transition-group(.vt-fade),
+::view-transition-group(.vt-roll) {
+  animation-duration: var(--vt-move, 420ms);
+  animation-timing-function: var(--vt-ease, cubic-bezier(0.32, 0.72, 0, 1));
+}
+::view-transition-image-pair(.vt-morph) {
+  animation: var(--vt-move, 420ms) var(--vt-ease, cubic-bezier(0.32, 0.72, 0, 1)) vt-via-blur;
+}
+::view-transition-old(.vt-fade) {
+  animation: var(--vt-exit, 150ms) var(--vt-ease-out, cubic-bezier(0.33, 1, 0.68, 1)) both
+    vt-fade-out;
+}
+::view-transition-new(.vt-fade) {
+  animation: var(--vt-enter, 210ms) var(--vt-ease-out, cubic-bezier(0.33, 1, 0.68, 1))
+    var(--vt-enter-delay, 90ms) both vt-fade;
+}
+
+::view-transition-group(.vt-slow) {
+  animation-duration: var(--vt-slow, 480ms);
+}
+
+::view-transition-group(.vt-spring) {
+  animation-timing-function: var(
+    --vt-bounce,
+    linear(0, 0.22 8%, 0.6 18%, 0.94 30%, 1.07 40%, 1.05 48%, 1 60%, 0.99 74%, 1)
+  );
+}
+
+::view-transition-old(.vt-dissolve) {
+  animation: var(--vt-enter, 210ms) linear both vt-dissolve-out;
+}
+::view-transition-new(.vt-dissolve) {
+  animation: var(--vt-enter, 210ms) linear both vt-dissolve-in;
+}
+@keyframes vt-dissolve-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes vt-dissolve-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+::view-transition-old(.vt-reveal) {
+  transform-origin: center;
+  animation:
+    var(--vt-exit, 150ms) linear both vt-dissolve-out,
+    var(--vt-slow, 480ms)
+      var(
+        --vt-bounce,
+        linear(0, 0.22 8%, 0.6 18%, 0.94 30%, 1.07 40%, 1.05 48%, 1 60%, 0.99 74%, 1)
+      )
+      both vt-reveal-out;
+}
+::view-transition-new(.vt-reveal) {
+  transform-origin: center;
+  animation:
+    var(--vt-enter, 210ms) linear both vt-dissolve-in,
+    var(--vt-slow, 480ms)
+      var(
+        --vt-bounce,
+        linear(0, 0.22 8%, 0.6 18%, 0.94 30%, 1.07 40%, 1.05 48%, 1 60%, 0.99 74%, 1)
+      )
+      both vt-reveal-in;
+}
+@keyframes vt-reveal-in {
+  from {
+    scale: 0.92;
+  }
+  to {
+    scale: 1;
+  }
+}
+@keyframes vt-reveal-out {
+  from {
+    scale: 1;
+  }
+  to {
+    scale: 0.92;
+  }
+}
+
+::view-transition-group(.vt-blur) {
+  animation: none;
+}
+::view-transition-old(.vt-blur),
+::view-transition-new(.vt-blur) {
+  width: auto;
+  height: auto;
+  left: 50%;
+  translate: -50% 0;
+}
+::view-transition-old(.vt-blur) {
+  animation: 250ms var(--vt-ease-out, cubic-bezier(0.33, 1, 0.68, 1)) both vt-blur-out;
+}
+::view-transition-new(.vt-blur) {
+  animation: 250ms var(--vt-ease-out, cubic-bezier(0.33, 1, 0.68, 1)) both vt-blur-in;
+}
+::view-transition-image-pair(.vt-blur),
+::view-transition-image-pair(.vt-expand) {
+  isolation: isolate;
+}
+::view-transition-old(.vt-blur),
+::view-transition-new(.vt-blur),
+::view-transition-old(.vt-expand),
+::view-transition-new(.vt-expand) {
+  mix-blend-mode: plus-lighter;
+}
+::view-transition-old(.vt-blur):only-child,
+::view-transition-new(.vt-blur):only-child,
+::view-transition-old(.vt-expand):only-child,
+::view-transition-new(.vt-expand):only-child {
+  mix-blend-mode: normal;
+}
+::view-transition-old(.vt-blur):only-child {
+  animation: 250ms var(--vt-ease-out, cubic-bezier(0.33, 1, 0.68, 1)) both vt-blur-leave;
+}
+@keyframes vt-blur-leave {
+  40% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    filter: blur(4px);
+  }
+}
+
+@keyframes vt-fade {
+  from {
+    opacity: 0;
+    filter: blur(3px);
+  }
+}
+@keyframes vt-fade-out {
+  to {
+    opacity: 0;
+    filter: blur(3px);
+  }
+}
+@keyframes vt-via-blur {
+  30% {
+    filter: blur(3px);
+  }
+}
+@keyframes vt-blur-out {
+  to {
+    opacity: 0;
+    filter: blur(4px);
+  }
+}
+@keyframes vt-blur-in {
+  from {
+    opacity: 0;
+    filter: blur(4px);
+  }
+}
+
+/* ── Presence: items added to or removed from a list ─────────── */
+
+::view-transition-new(.vt-presence):only-child {
+  animation: var(--vt-enter, 210ms) var(--vt-ease-out, cubic-bezier(0.33, 1, 0.68, 1))
+    var(--vt-enter-delay, 90ms) both vt-rise;
+}
+::view-transition-old(.vt-presence):only-child {
+  animation: var(--vt-exit, 150ms) var(--vt-ease-out, cubic-bezier(0.33, 1, 0.68, 1)) both
+    vt-fade-out;
+}
+
+::view-transition-new(.vt-rise) {
+  animation: 300ms var(--vt-ease-out, cubic-bezier(0.33, 1, 0.68, 1)) both vt-rise;
+}
+::view-transition-old(.vt-rise) {
+  animation: var(--vt-exit, 150ms) var(--vt-ease-out, cubic-bezier(0.33, 1, 0.68, 1)) both
+    vt-fade-out;
+}
+@keyframes vt-rise {
+  from {
+    opacity: 0;
+    translate: 0 8px;
+    filter: blur(4px);
+  }
+}
+
+::view-transition-group(.vt-pop) {
+  animation-duration: 300ms;
+  animation-timing-function: var(
+    --vt-bounce,
+    linear(0, 0.22 8%, 0.6 18%, 0.94 30%, 1.07 40%, 1.05 48%, 1 60%, 0.99 74%, 1)
+  );
+}
+::view-transition-new(.vt-pop):only-child {
+  animation: 300ms
+    var(--vt-bounce, linear(0, 0.22 8%, 0.6 18%, 0.94 30%, 1.07 40%, 1.05 48%, 1 60%, 0.99 74%, 1))
+    both vt-pop;
+}
+::view-transition-old(.vt-pop):only-child {
+  animation: 200ms var(--vt-ease-out, cubic-bezier(0.33, 1, 0.68, 1)) both vt-pop-out;
+}
+
+@keyframes vt-pop {
+  from {
+    scale: 0.9;
+    opacity: 0;
+  }
+}
+@keyframes vt-pop-out {
+  to {
+    scale: 0.9;
+    opacity: 0;
+  }
+}
+
+/* ── Sizing: how the snapshots fill a changing box ───────────── */
+
+::view-transition-old(.vt-text),
+::view-transition-new(.vt-text) {
+  height: 100%;
+  width: auto;
+  object-fit: none;
+  object-position: left top;
+}
+
+::view-transition-old(.vt-center),
+::view-transition-new(.vt-center) {
+  width: 100%;
+  height: 100%;
+  object-fit: none;
+  object-position: center;
+}
+
+::view-transition-old(.vt-top),
+::view-transition-new(.vt-top) {
+  width: 100%;
+  height: 100%;
+  object-fit: none;
+  object-position: top;
+  transform-origin: top;
+}
+
+::view-transition-image-pair(.vt-cover) {
+  overflow: clip;
+  border-radius: var(--radius);
+}
+::view-transition-old(.vt-cover),
+::view-transition-new(.vt-cover) {
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── Surfaces: cards that resize without stretching ──────────── */
+
+::view-transition-group(.vt-shell),
+::view-transition-group(.vt-expand) {
+  background: var(--vt-surface, var(--card));
+  border-radius: var(--vt-radius, calc(var(--radius) * 1.4));
+  box-shadow: 0 0 0 1px var(--vt-ring, color-mix(in oklab, var(--foreground) 10%, transparent));
+}
+
+::view-transition-old(.vt-shell),
+::view-transition-new(.vt-shell) {
+  display: none;
+}
+
+::view-transition-group(.vt-shell.vt-inverse) {
+  background: var(--vt-inverse, var(--foreground));
+  border-radius: var(--vt-inverse-radius, 32px);
+  box-shadow: none;
+}
+
+::view-transition-image-pair(.vt-expand) {
+  overflow: clip;
+  border-radius: var(--vt-radius, calc(var(--radius) * 1.4));
+}
+::view-transition-old(.vt-expand),
+::view-transition-new(.vt-expand) {
+  width: 100%;
+  height: 100%;
+  object-fit: none;
+  object-position: left top;
+}
+::view-transition-old(.vt-expand) {
+  animation: 250ms var(--vt-ease-out, cubic-bezier(0.33, 1, 0.68, 1)) both vt-blur-out;
+}
+::view-transition-new(.vt-expand) {
+  animation: 250ms var(--vt-ease-out, cubic-bezier(0.33, 1, 0.68, 1)) both vt-blur-in;
+}
+
+::view-transition-image-pair(.vt-clip) {
+  overflow: clip;
+  border-radius: var(--vt-radius, calc(var(--radius) * 1.4));
+}
+
+::view-transition-group(.vt-clip) {
+  overflow: clip;
+  border-radius: var(--vt-radius, calc(var(--radius) * 1.4));
+}
+
+::view-transition-group(.vt-scroll) {
+  overflow: clip;
+}
+
+::view-transition-group(.vt-edge-bottom) {
+  mask-image: linear-gradient(to bottom, black calc(100% - 3rem), transparent);
+}
+
+::view-transition-group(.vt-clip.vt-inverse),
+::view-transition-image-pair(.vt-clip.vt-inverse) {
+  border-radius: var(--vt-inverse-radius, 32px);
+}
+
+/* ── Direction: add vt-forward or vt-back ────────────────────── */
+
+::view-transition-group(.vt-slide) {
+  animation-duration: 300ms;
+  animation-timing-function: var(--vt-ease, cubic-bezier(0.32, 0.72, 0, 1));
+}
+::view-transition-old(.vt-slide) {
+  animation:
+    var(--vt-exit, 150ms) var(--vt-ease-out, cubic-bezier(0.33, 1, 0.68, 1)) both vt-fade-out,
+    300ms var(--vt-ease, cubic-bezier(0.32, 0.72, 0, 1)) both vt-slide-out;
+}
+::view-transition-new(.vt-slide) {
+  animation:
+    var(--vt-enter, 210ms) var(--vt-ease-out, cubic-bezier(0.33, 1, 0.68, 1))
+      var(--vt-enter-delay, 90ms) both vt-fade,
+    300ms var(--vt-ease, cubic-bezier(0.32, 0.72, 0, 1)) both vt-slide;
+}
+::view-transition-old(.vt-slide.vt-forward),
+::view-transition-new(.vt-slide.vt-back) {
+  --vt-offset: -48px;
+}
+::view-transition-new(.vt-slide.vt-forward),
+::view-transition-old(.vt-slide.vt-back) {
+  --vt-offset: 48px;
+}
+
+::view-transition-group(.vt-swipe) {
+  animation-duration: var(--vt-swipe-duration, 300ms);
+  animation-timing-function: var(--vt-swipe-ease, cubic-bezier(0.25, 1, 0.5, 1));
+}
+::view-transition-image-pair(.vt-swipe) {
+  overflow: clip;
+  border-radius: var(--vt-radius, calc(var(--radius) * 1.4));
+}
+::view-transition-old(.vt-swipe.vt-forward) {
+  animation: var(--vt-swipe-duration, 300ms) var(--vt-swipe-ease, cubic-bezier(0.25, 1, 0.5, 1))
+    both vt-swipe-out-left;
+}
+::view-transition-new(.vt-swipe.vt-forward) {
+  animation: var(--vt-swipe-duration, 300ms) var(--vt-swipe-ease, cubic-bezier(0.25, 1, 0.5, 1))
+    both vt-swipe-in-right;
+}
+::view-transition-old(.vt-swipe.vt-back) {
+  animation: var(--vt-swipe-duration, 300ms) var(--vt-swipe-ease, cubic-bezier(0.25, 1, 0.5, 1))
+    both vt-swipe-out-right;
+}
+::view-transition-new(.vt-swipe.vt-back) {
+  animation: var(--vt-swipe-duration, 300ms) var(--vt-swipe-ease, cubic-bezier(0.25, 1, 0.5, 1))
+    both vt-swipe-in-left;
+}
+
+::view-transition-group(.vt-push) {
+  animation: none;
+}
+::view-transition-old(.vt-push.vt-forward) {
+  animation: var(--vt-push-duration, 300ms) var(--vt-push-ease, cubic-bezier(0.3, 0.7, 0.1, 1)) both
+    vt-push-under-out;
+}
+::view-transition-new(.vt-push.vt-forward) {
+  animation: var(--vt-push-duration, 300ms) var(--vt-push-ease, cubic-bezier(0.3, 0.7, 0.1, 1)) both
+    vt-push-over-in;
+}
+::view-transition-old(.vt-push.vt-back) {
+  animation: var(--vt-push-duration, 300ms) var(--vt-push-ease, cubic-bezier(0.3, 0.7, 0.1, 1)) both
+    vt-push-over-out;
+  z-index: 1;
+}
+::view-transition-new(.vt-push.vt-back) {
+  animation: var(--vt-push-duration, 300ms) var(--vt-push-ease, cubic-bezier(0.3, 0.7, 0.1, 1)) both
+    vt-push-under-in;
+}
+
+::view-transition-group(.vt-roll) {
+  animation-duration: var(--vt-enter, 210ms);
+}
+::view-transition-old(.vt-roll) {
+  animation: var(--vt-exit, 150ms) var(--vt-ease-out, cubic-bezier(0.33, 1, 0.68, 1)) both
+    vt-roll-out;
+}
+::view-transition-new(.vt-roll) {
+  animation: var(--vt-enter, 210ms) var(--vt-ease, cubic-bezier(0.32, 0.72, 0, 1)) both vt-roll-in;
+}
+::view-transition-old(.vt-roll.vt-forward),
+::view-transition-new(.vt-roll.vt-back) {
+  --vt-offset: -1em;
+}
+::view-transition-new(.vt-roll.vt-forward),
+::view-transition-old(.vt-roll.vt-back) {
+  --vt-offset: 1em;
+}
+
+@keyframes vt-swipe-out-left {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: calc(var(--vt-swipe-travel, calc(100% + 1.5rem)) * -1) 0;
+  }
+}
+@keyframes vt-swipe-in-right {
+  from {
+    translate: var(--vt-swipe-travel, calc(100% + 1.5rem)) 0;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+@keyframes vt-swipe-out-right {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: var(--vt-swipe-travel, calc(100% + 1.5rem)) 0;
+  }
+}
+@keyframes vt-swipe-in-left {
+  from {
+    translate: calc(var(--vt-swipe-travel, calc(100% + 1.5rem)) * -1) 0;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+@keyframes vt-slide {
+  from {
+    translate: var(--vt-offset) 0;
+    filter: blur(6px);
+  }
+}
+@keyframes vt-slide-out {
+  to {
+    translate: var(--vt-offset) 0;
+    filter: blur(6px);
+  }
+}
+@keyframes vt-push-under-out {
+  to {
+    translate: -30% 0;
+  }
+}
+@keyframes vt-push-under-in {
+  from {
+    translate: -30% 0;
+  }
+}
+@keyframes vt-push-over-in {
+  from {
+    translate: 100% 0;
+  }
+}
+@keyframes vt-push-over-out {
+  to {
+    translate: 100% 0;
+  }
+}
+@keyframes vt-roll-out {
+  to {
+    translate: 0 var(--vt-offset);
+    opacity: 0;
+    filter: blur(2px);
+  }
+}
+@keyframes vt-roll-in {
+  from {
+    translate: 0 var(--vt-offset);
+    opacity: 0;
+    filter: blur(2px);
+  }
+}
+
+::view-transition-group(.vt-quick) {
+  animation-duration: var(--vt-enter, 210ms);
+}
+::view-transition-old(.vt-quick),
+::view-transition-new(.vt-quick) {
+  animation-duration: var(--vt-enter, 210ms);
+  animation-delay: 0s;
+}
+
+/* ── Stagger: vt-delay-1 … vt-delay-7 ────────────────────────── */
+
+::view-transition-old(.vt-delay-1),
+::view-transition-new(.vt-delay-1) {
+  animation-delay: calc(var(--vt-stagger, 35ms) * 1);
+}
+::view-transition-old(.vt-delay-2),
+::view-transition-new(.vt-delay-2) {
+  animation-delay: calc(var(--vt-stagger, 35ms) * 2);
+}
+::view-transition-old(.vt-delay-3),
+::view-transition-new(.vt-delay-3) {
+  animation-delay: calc(var(--vt-stagger, 35ms) * 3);
+}
+::view-transition-old(.vt-delay-4),
+::view-transition-new(.vt-delay-4) {
+  animation-delay: calc(var(--vt-stagger, 35ms) * 4);
+}
+::view-transition-old(.vt-delay-5),
+::view-transition-new(.vt-delay-5) {
+  animation-delay: calc(var(--vt-stagger, 35ms) * 5);
+}
+::view-transition-old(.vt-delay-6),
+::view-transition-new(.vt-delay-6) {
+  animation-delay: calc(var(--vt-stagger, 35ms) * 6);
+}
+::view-transition-old(.vt-delay-7),
+::view-transition-new(.vt-delay-7) {
+  animation-delay: calc(var(--vt-stagger, 35ms) * 7);
+}
+
+/* ── Reduced motion ──────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-image-pair(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+  ::view-transition-old(*) {
+    animation: 150ms var(--vt-ease-out, cubic-bezier(0.33, 1, 0.68, 1)) both vt-dissolve-out !important;
+  }
+  ::view-transition-new(*) {
+    animation: 150ms var(--vt-ease-out, cubic-bezier(0.33, 1, 0.68, 1)) both vt-dissolve-in !important;
+  }
+}

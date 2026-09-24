@@ -1,0 +1,8 @@
+.next
+node_modules
+public
+package-lock.json
+next-env.d.ts
+# The skill: generated (skills) and its templates, whose {{placeholders}} Prettier misreads
+skills
+scripts/skill
