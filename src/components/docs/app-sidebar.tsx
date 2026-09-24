@@ -105,7 +105,7 @@ export function MobileNav() {
           <Logo className="size-5" />
           <span className="text-sm font-medium tracking-tight">Morph UI</span>
         </DocsLink>
-        <div className="flex items-center gap-0.5">
+        <div className="flex items-center gap-1.5">
           <GitHubLink />
           <ThemeToggle />
         </div>
