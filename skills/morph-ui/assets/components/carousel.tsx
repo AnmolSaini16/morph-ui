@@ -131,6 +131,7 @@ export function CarouselContent({
   useLayoutEffect(() => setLabels(key ? key.split("\n") : []), [key, setLabels])
 
   if (!items.length) return <p className="text-sm text-muted-foreground">No slides yet.</p>
+  const current = Math.min(active, items.length - 1)
   return (
     <ViewTransition
       update={{
@@ -140,9 +141,12 @@ export function CarouselContent({
       }}
     >
       <div
+        role="group"
+        aria-roledescription="slide"
+        aria-label={`${current + 1} of ${items.length}: ${key.split("\n")[current]}`}
         className={`flex aspect-square min-w-0 flex-1 items-center justify-center overflow-hidden rounded-xl border border-border bg-card p-6 text-card-foreground ${className}`}
       >
-        {items[active] ?? items[0]}
+        {items[current]}
       </div>
     </ViewTransition>
   )

@@ -53,6 +53,16 @@ type DialogState = {
 
 const Context = createContext<DialogState | null>(null)
 
+function linkParts(el: HTMLElement, id: string) {
+  for (const [attr, part] of [
+    ["aria-labelledby", "title"],
+    ["aria-describedby", "description"],
+  ]) {
+    if (document.getElementById(`${id}-${part}`)) el.setAttribute(attr, `${id}-${part}`)
+    else el.removeAttribute(attr)
+  }
+}
+
 function useDialog() {
   const dialog = useContext(Context)
   if (!dialog) throw new Error("MorphDialog parts must be used inside <MorphDialog>")
@@ -118,9 +128,11 @@ export function MorphDialogTrigger({
 export function MorphDialogContent({
   className = "",
   children,
+  "aria-label": label,
 }: {
   className?: string
   children: ReactNode
+  "aria-label"?: string
 }) {
   const { id, open, close, closeNow, trigger } = useDialog()
   const dialog = useRef<HTMLDialogElement>(null)
@@ -129,18 +141,20 @@ export function MorphDialogContent({
   useLayoutEffect(() => {
     const el = dialog.current
     if (!el) return
-    if (open && !el.open) el.showModal()
+    if (open && !el.open) {
+      linkParts(el, id)
+      el.showModal()
+    }
     if (!open && el.open) {
       el.close()
       trigger.current?.focus({ preventScroll: true })
     }
-  }, [open, trigger])
+  }, [open, id, trigger])
 
   return (
     <dialog
       ref={dialog}
-      aria-labelledby={`${id}-title`}
-      aria-describedby={`${id}-description`}
+      aria-label={label}
       onCancel={(e) => {
         e.preventDefault()
         closeNow()

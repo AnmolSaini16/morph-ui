@@ -172,7 +172,7 @@ export function StackNavigator({ chats, title = "Messages" }: { chats: Chat[]; t
                     }}
                     type="button"
                     onClick={() => push(chat)}
-                    className="flex w-full cursor-pointer items-center gap-3 px-4 py-3 text-left transition-colors outline-none hover:bg-muted/50 focus-visible:bg-muted/50"
+                    className="flex w-full cursor-pointer items-center gap-3 px-4 py-3 text-left transition-colors outline-none hover:bg-muted/50 focus-visible:bg-muted/50 focus-visible:inset-ring-2 focus-visible:inset-ring-ring/50"
                   >
                     <Avatar chat={chat} />
                     <div className="min-w-0 flex-1">

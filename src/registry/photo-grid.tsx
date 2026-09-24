@@ -42,12 +42,23 @@ export function PhotoGrid({
   height?: string
 }) {
   const root = useRef<HTMLDivElement>(null)
+  const removed = useRef<number | null>(null)
   useLayoutEffect(() => {
     const el = root.current
     const transition = document.activeViewTransition
     if (!el || !transition) return
     el.dataset.animating = ""
     transition.finished.finally(() => delete el.dataset.animating)
+  }, [photos])
+
+  useLayoutEffect(() => {
+    const i = removed.current
+    const el = root.current
+    if (i === null || !el) return
+    removed.current = null
+    const buttons = el.querySelectorAll<HTMLElement>("[data-remove]")
+    const next = buttons[Math.min(i, buttons.length - 1)] ?? el.querySelector("[role=status]")
+    ;(next as HTMLElement | null)?.focus({ preventScroll: true })
   }, [photos])
 
   return (
@@ -85,7 +96,7 @@ export function PhotoGrid({
         ))}
       </ul>
       {photos.length === 0 && (
-        <p role="status" className="text-sm text-muted-foreground">
+        <p role="status" tabIndex={-1} className="text-sm text-muted-foreground outline-none">
           No photos yet.
         </p>
       )}
@@ -93,12 +104,14 @@ export function PhotoGrid({
         <div
           className={`${grid} pointer-events-none absolute inset-x-0 top-0 group-has-[[style*=view-transition-name]]/grid:opacity-0 group-data-[animating]/grid:opacity-0`}
         >
-          {photos.map((photo) => (
+          {photos.map((photo, i) => (
             <div key={photo.id} className="flex h-36 items-start justify-end pt-16 pr-1">
               <button
                 type="button"
+                data-remove
                 aria-label={`Remove ${photo.name}`}
                 onClick={() => {
+                  removed.current = i
                   document.activeViewTransition?.skipTransition()
                   startTransition(() => onRemove(photo.id))
                 }}

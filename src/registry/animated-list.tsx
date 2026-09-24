@@ -50,6 +50,7 @@ export function AnimatedList({
 }) {
   const [more, setMore] = useState(false)
   const scroller = useRef<HTMLDivElement>(null)
+  const removed = useRef<number | null>(null)
 
   useEffect(() => {
     const el = scroller.current
@@ -72,6 +73,16 @@ export function AnimatedList({
     if (!el || !transition) return
     el.dataset.animating = ""
     transition.finished.finally(() => delete el.dataset.animating)
+  }, [tasks])
+
+  useLayoutEffect(() => {
+    const i = removed.current
+    const el = scroller.current
+    if (i === null || !el) return
+    removed.current = null
+    const buttons = el.querySelectorAll<HTMLElement>("[data-remove]")
+    const next = buttons[Math.min(i, buttons.length - 1)] ?? el.querySelector("[role=status]")
+    ;(next as HTMLElement | null)?.focus({ preventScroll: true })
   }, [tasks])
 
   return (
@@ -113,19 +124,22 @@ export function AnimatedList({
         {tasks.length === 0 && (
           <p
             role="status"
-            className="rounded-lg border border-border border-dashed p-6 text-center text-sm text-muted-foreground"
+            tabIndex={-1}
+            className="rounded-lg border border-border border-dashed p-6 text-center text-sm text-muted-foreground outline-none"
           >
             All clear. Add a task.
           </p>
         )}
         {onRemove && (
           <div className="pointer-events-none absolute inset-x-0 top-0 grid gap-2 group-has-[[style*=view-transition-name]]/list:opacity-0 group-data-[animating]/list:opacity-0">
-            {tasks.map((task) => (
+            {tasks.map((task, i) => (
               <div key={task.id} className="flex h-12 items-center justify-end pr-2">
                 <button
                   type="button"
+                  data-remove
                   aria-label={`Remove ${task.title}`}
                   onClick={() => {
+                    removed.current = i
                     document.activeViewTransition?.skipTransition()
                     startTransition(() => onRemove(task.id))
                   }}

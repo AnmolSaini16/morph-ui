@@ -24,25 +24,26 @@ export function NumberFlip({
     maximumFractionDigits: fractionDigits,
   })
   return (
-    <span aria-label={formatted} className={`inline-flex tabular-nums ${className}`}>
-      {formatted.split("").map((char, index) => {
-        const position = formatted.length - index
-        const delay = stagger
-          ? Math.min(formatted.slice(index + 1).replace(/\D/g, "").length, 2)
-          : 0
-        return /\d/.test(char) ? (
-          <ViewTransition
-            key={position}
-            default={`vt-roll vt-${direction}${delay ? ` vt-delay-${delay}` : ""}`}
-          >
-            <span aria-hidden="true">{char}</span>
-          </ViewTransition>
-        ) : (
-          <span key={position} aria-hidden="true">
-            {char}
-          </span>
-        )
-      })}
+    <span className={`inline-flex tabular-nums ${className}`}>
+      <span className="sr-only">{formatted}</span>
+      <span aria-hidden="true" className="inline-flex">
+        {formatted.split("").map((char, index) => {
+          const position = formatted.length - index
+          const delay = stagger
+            ? Math.min(formatted.slice(index + 1).replace(/\D/g, "").length, 2)
+            : 0
+          return /\d/.test(char) ? (
+            <ViewTransition
+              key={position}
+              default={`vt-roll vt-${direction}${delay ? ` vt-delay-${delay}` : ""}`}
+            >
+              <span>{char}</span>
+            </ViewTransition>
+          ) : (
+            <span key={position}>{char}</span>
+          )
+        })}
+      </span>
     </span>
   )
 }

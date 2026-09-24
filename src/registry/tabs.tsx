@@ -118,7 +118,7 @@ export function TabsTrigger({ value, children }: { value: string; children: Reac
       data-value={value}
       id={`${id}-tab-${value}`}
       aria-selected={selected}
-      aria-controls={`${id}-panel-${value}`}
+      aria-controls={selected ? `${id}-panel-${value}` : undefined}
       tabIndex={selected ? 0 : -1}
       onClick={() => select(value)}
       className={`relative -mb-px cursor-pointer rounded-md px-3 pt-1.5 pb-2.5 text-sm font-medium whitespace-nowrap outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring/50 ${
@@ -159,7 +159,8 @@ export function TabsContent({
         role="tabpanel"
         id={`${id}-panel-${value}`}
         aria-labelledby={`${id}-tab-${value}`}
-        className={`-mx-1 h-40 overflow-hidden px-1 pt-5 text-sm ${className}`}
+        tabIndex={0}
+        className={`-mx-1 h-40 overflow-hidden rounded-md px-1 pt-5 text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50 ${className}`}
       >
         {children}
       </div>

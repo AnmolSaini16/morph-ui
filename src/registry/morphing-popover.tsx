@@ -61,13 +61,16 @@ export function MorphingPopover({
 
   useLayoutEffect(() => {
     if (open) {
+      const title = document.getElementById(`${id}-title`)
+      if (title) panel.current?.setAttribute("aria-labelledby", title.id)
+      else panel.current?.removeAttribute("aria-labelledby")
       const field = panel.current?.querySelector<HTMLElement>(
         "[autofocus], input, textarea, select",
       )
       ;(field ?? panel.current)?.focus({ preventScroll: true })
     } else if (wasOpen.current) trigger.current?.focus({ preventScroll: true })
     wasOpen.current = open
-  }, [open])
+  }, [open, id])
 
   useLayoutEffect(() => {
     if (!open) return
@@ -131,6 +134,7 @@ export function MorphingPopoverTrigger({
       <button
         ref={trigger}
         type="button"
+        aria-haspopup="dialog"
         aria-expanded={false}
         onClick={show}
         className={`inline-flex h-9 cursor-pointer items-center justify-center rounded-xl bg-card border px-3 text-sm leading-none font-medium text-card-foreground outline-none transition-colors hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 ${className}`}
@@ -153,7 +157,6 @@ export function MorphingPopoverContent({
       <div
         ref={panel}
         role="dialog"
-        aria-labelledby={`${id}-title`}
         tabIndex={-1}
         className={`h-fit w-full rounded-xl bg-card p-3 text-sm text-card-foreground ring-1 ring-foreground/10 outline-none [&[style*=view-transition-name]]:ring-0 ${className}`}
         {...props}
