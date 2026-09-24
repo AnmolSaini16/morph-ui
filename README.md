@@ -2,6 +2,11 @@
 
 Animated React components you copy and paste, built on the View Transition API and React's `<ViewTransition>`. No animation library, just React 19.3+ and a little CSS.
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/preview-dark.png" />
+  <img alt="A grid of Morph UI components: Post List, List Switcher, Animated List, Number Flip, Photo Grid and Page Transition" src=".github/assets/preview-light.png" />
+</picture>
+
 ## Use a component
 
 1. Once: copy `morph.css` next to your `globals.css` and import it after Tailwind. Every component is built from its `vt-*` classes, and yours can use them too.
