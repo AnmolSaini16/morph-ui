@@ -137,7 +137,7 @@ export function MorphingPopoverTrigger({
         aria-haspopup="dialog"
         aria-expanded={false}
         onClick={show}
-        className={`inline-flex h-9 cursor-pointer items-center justify-center rounded-xl bg-card border px-3 text-sm leading-none font-medium text-card-foreground outline-none transition-colors hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 ${className}`}
+        className={`inline-flex h-9 cursor-pointer items-center justify-center rounded-xl bg-card px-3 text-sm leading-none font-medium text-card-foreground ring-1 ring-foreground/10 outline-none transition-colors hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 [&[style*=view-transition-name]]:ring-0 ${className}`}
       >
         <Label>{children}</Label>
       </button>
