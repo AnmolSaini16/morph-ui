@@ -41,11 +41,13 @@ export function DocsLink({
   return (
     <Link
       href={href}
+      scroll={false}
       onClick={(event) => {
         onClick?.(event)
         if (event.defaultPrevented || event.button !== 0) return
         if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
         document.activeViewTransition?.skipTransition()
+        document.documentElement.style.setProperty("--docs-page-offset", `${-scrollY}px`)
         select(href)
       }}
       {...props}

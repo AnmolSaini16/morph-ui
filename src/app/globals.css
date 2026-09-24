@@ -183,6 +183,17 @@
 :root {
   view-transition-name: none;
 }
+
+/* Docs pages swap with a plain crossfade: blur on a whole-page snapshot costs frames on
+   phones. The box sits where the new page is, scrolled to the top, so the old page is
+   offset by how far down it was and stays in place while the new one fades in. */
+::view-transition-old(docs-page),
+::view-transition-new(docs-page) {
+  filter: none !important;
+}
+::view-transition-old(docs-page) {
+  translate: -50% var(--docs-page-offset, 0px);
+}
 .code-fade {
   opacity: 0;
   animation: code-fade linear both;
