@@ -379,13 +379,13 @@
 }
 ::view-transition-old(.vt-slide) {
   animation:
-    var(--vt-exit, 150ms) var(--vt-ease-out, cubic-bezier(0.33, 1, 0.68, 1)) both vt-fade-out,
+    var(--vt-exit, 150ms) var(--vt-ease-out, cubic-bezier(0.33, 1, 0.68, 1)) both vt-dissolve-out,
     300ms var(--vt-ease, cubic-bezier(0.32, 0.72, 0, 1)) both vt-slide-out;
 }
 ::view-transition-new(.vt-slide) {
   animation:
     var(--vt-enter, 210ms) var(--vt-ease-out, cubic-bezier(0.33, 1, 0.68, 1))
-      var(--vt-enter-delay, 90ms) both vt-fade,
+      var(--vt-enter-delay, 90ms) both vt-dissolve-in,
     300ms var(--vt-ease, cubic-bezier(0.32, 0.72, 0, 1)) both vt-slide;
 }
 ::view-transition-old(.vt-slide.vt-forward),
@@ -497,13 +497,11 @@
 @keyframes vt-slide {
   from {
     translate: var(--vt-offset) 0;
-    filter: blur(6px);
   }
 }
 @keyframes vt-slide-out {
   to {
     translate: var(--vt-offset) 0;
-    filter: blur(6px);
   }
 }
 @keyframes vt-push-under-out {
@@ -530,14 +528,12 @@
   to {
     translate: 0 var(--vt-offset);
     opacity: 0;
-    filter: blur(2px);
   }
 }
 @keyframes vt-roll-in {
   from {
     translate: 0 var(--vt-offset);
     opacity: 0;
-    filter: blur(2px);
   }
 }
 
@@ -582,6 +578,24 @@
 }
 
 /* ── Reduced motion ──────────────────────────────────────────── */
+
+/* WebKit draws blurred snapshots a few pixels off, then jumps when the transition
+   ends. That's a rendering bug with no feature to detect, so Safari and every iOS
+   browser get the same motion without the blur. */
+@supports (font: -apple-system-body) {
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    filter: none !important;
+  }
+}
+
+/* Without nested groups, text leaving on its own can't be clipped by its card,
+   so it's dropped at once instead of fading outside the card */
+@supports not (view-transition-group: contain) {
+  ::view-transition-old(.vt-fade):only-child {
+    display: none;
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-group(*),

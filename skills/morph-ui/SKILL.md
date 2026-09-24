@@ -31,7 +31,7 @@ Components:
 - **Dynamic Island** (`dynamic-island`): One shape, many states. The pill expands and reveals its content.
 - **Morphing Popover** (`morphing-popover`): A button grows into a panel and folds back into the button.
 - **Morph Dialog** (`morph-dialog`): A card grows into a modal dialog and folds back when it closes.
-- **Number Flip** (`number-flip`): Changed digits roll a full line, with blur and optional stagger.
+- **Number Flip** (`number-flip`): Changed digits roll a full line, with an optional stagger.
 - **Animated List** (`animated-list`): Add, remove, shuffle and sort with zero layout math.
 - **Photo Grid** (`photo-grid`): Photos pop in, shrink away and bounce into their new spots.
 - **List Switcher** (`list-switcher`): Cards fold into a list; names and stats glide into place.

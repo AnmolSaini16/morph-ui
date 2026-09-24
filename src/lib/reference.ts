@@ -117,14 +117,26 @@ export const skipOnScrollCode = `// components/skip-on-scroll.tsx
 
 import { useEffect } from "react"
 
-// Animation snapshots are pinned to the screen, not the page. If anything
-// scrolls mid-animation, finish it, so content never drifts with the scroll.
+const scrollKeys = new Set(["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End"])
+
+// Animation snapshots are pinned to the screen, not the page. If the user scrolls
+// mid-animation, finish it, so content never drifts with the scroll. It listens to
+// the user's input, not the scroll event, so a scroll the browser makes on its own
+// (layout shifting, a momentum settle) doesn't cut an animation short.
 export function SkipOnScroll() {
   useEffect(() => {
     const skip = () => document.activeViewTransition?.skipTransition()
-    // Capture catches every scroll: the page and any inner scroll area
-    addEventListener("scroll", skip, { capture: true, passive: true })
-    return () => removeEventListener("scroll", skip, { capture: true })
+    const onKey = (e: KeyboardEvent) => scrollKeys.has(e.key) && skip()
+    // Capture catches input over any scroll area: the page and inner ones
+    const options = { capture: true, passive: true }
+    addEventListener("wheel", skip, options)
+    addEventListener("touchmove", skip, options)
+    addEventListener("keydown", onKey, options)
+    return () => {
+      removeEventListener("wheel", skip, options)
+      removeEventListener("touchmove", skip, options)
+      removeEventListener("keydown", onKey, options)
+    }
   }, [])
   return null
 }

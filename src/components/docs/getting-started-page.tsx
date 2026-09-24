@@ -170,7 +170,8 @@ export function GettingStartedPage({ baseCss }: { baseCss: SourceFile }) {
       <p className="mb-4 text-[15px] leading-7 text-muted-foreground">
         While a component animates, the browser draws snapshots pinned to the screen. If the page
         scrolls during that moment, the animating content seems to drift with the scroll. Add this
-        once, anywhere in your layout, to finish the animation as soon as anything scrolls.
+        once, anywhere in your layout, to finish the animation as soon as someone starts scrolling.
+        Scrolls the browser makes on its own leave the animation alone.
       </p>
       <CodeCard code={skipOnScrollCode} file="components/skip-on-scroll.tsx" />
 

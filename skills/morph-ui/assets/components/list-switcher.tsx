@@ -145,7 +145,9 @@ export function ListSwitcher({
         >
           <ul
             className={
-              isCards ? "grid auto-rows-fr grid-cols-2 gap-2 @md:gap-3" : "flex flex-col gap-2"
+              isCards
+                ? "grid auto-rows-fr grid-cols-1 gap-2 @sm:grid-cols-2 @md:gap-3"
+                : "flex flex-col gap-2"
             }
           >
             {repos.map((repo) => (

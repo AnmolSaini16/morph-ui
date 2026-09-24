@@ -48,7 +48,7 @@ A card grows into a modal dialog and folds back when it closes.
 
 ## Number Flip
 
-Changed digits roll a full line, with blur and optional stagger.
+Changed digits roll a full line, with an optional stagger.
 
 - Component: `assets/components/number-flip.tsx`
 - Example: `assets/examples/number-flip.tsx`

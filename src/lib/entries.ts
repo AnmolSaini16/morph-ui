@@ -45,7 +45,7 @@ export const entries: Entry[] = [
     slug: "number-flip",
     category: "Morphs",
     title: "Number Flip",
-    description: "Changed digits roll a full line, with blur and optional stagger.",
+    description: "Changed digits roll a full line, with an optional stagger.",
     uses: ["one boundary per digit", "vt-roll", "vt-delay-*"],
   },
   {
