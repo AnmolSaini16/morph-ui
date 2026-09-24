@@ -11,7 +11,7 @@ export function GitHubLink({ className }: { className?: string }) {
   return (
     <Button
       variant="ghost"
-      size="icon"
+      size="icon-sm"
       asChild
       className={cn("rounded-full text-muted-foreground", className)}
     >

@@ -80,7 +80,7 @@ export function AppSidebar() {
             Anmol
           </a>
         </p>
-        <div className="flex shrink-0 items-center">
+        <div className="flex shrink-0 gap-0.5 items-center">
           <GitHubLink />
           <ThemeToggle />
         </div>
@@ -105,7 +105,7 @@ export function MobileNav() {
           <Logo className="size-5" />
           <span className="text-sm font-medium tracking-tight">Morph UI</span>
         </DocsLink>
-        <div className="flex items-center">
+        <div className="flex items-center gap-0.5">
           <GitHubLink />
           <ThemeToggle />
         </div>
