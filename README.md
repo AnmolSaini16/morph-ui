@@ -30,7 +30,8 @@ The site is a static export (`output: "export"`), served from `out/` by Cloudfla
 
 - Build command: `npm run build`
 - Deploy command: `npx wrangler deploy`
-- Build variable: `NEXT_PUBLIC_SITE_URL`, your site's URL, used for canonical links, OG images and the sitemap
+
+The site's URL, used for canonical links, OG images and the sitemap, is `NEXT_PUBLIC_SITE_URL` in `.env.production`.
 
 ## Structure
 
