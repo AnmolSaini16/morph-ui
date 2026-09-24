@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
-export const GITHUB_URL = "#"
+export const GITHUB_URL = "https://github.com/AnmolSaini16/morph-ui"
 export const REPO = GITHUB_URL.match(/github\.com\/([^/?#]+\/[^/?#]+)/)?.[1] ?? "owner/morph-ui"
 export const X_URL = "https://x.com/anmold_s"
 

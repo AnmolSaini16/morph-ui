@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { ComponentPage } from "@/components/docs/component-page"
 import { entries } from "@/lib/entries"
+import { pageMetadata } from "@/lib/site"
 import { getComponentFiles, getThemeVars, getUsage } from "@/lib/sources"
 
 type Props = { params: Promise<{ slug: string }> }
@@ -15,7 +16,9 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const entry = entries.find((e) => e.slug === slug)
-  return entry ? { title: entry.title, description: entry.description } : {}
+  return entry
+    ? pageMetadata({ title: entry.title, description: entry.description, path: `/${slug}` })
+    : {}
 }
 
 export default async function Page({ params }: Props) {

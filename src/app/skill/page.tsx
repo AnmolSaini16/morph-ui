@@ -1,11 +1,7 @@
-import type { Metadata } from "next"
 import { SkillPage } from "@/components/docs/skill-page"
+import { docsPages, pageMetadata } from "@/lib/site"
 
-export const metadata: Metadata = {
-  title: "Skill",
-  description:
-    "Teach your coding agent Morph UI: it installs components and writes view transitions the right way.",
-}
+export const metadata = pageMetadata({ ...docsPages.skill, path: "/skill" })
 
 export default function Page() {
   return <SkillPage />
