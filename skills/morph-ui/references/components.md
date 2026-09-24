@@ -30,9 +30,9 @@ A button grows into a panel and folds back into the button.
 
 - Component: `assets/components/morphing-popover.tsx`
 - Example: `assets/examples/morphing-popover.tsx`
-- Exports: `MorphingPopover`
+- Exports: `MorphingPopover`, `MorphingPopoverTrigger`, `MorphingPopoverContent`, `MorphingPopoverTitle`, `MorphingPopoverClose`
 - Classes: `vt-move`, `vt-expand`, `vt-text`, `vt-quick`
-- Theme variables: `--background`, `--foreground`, `--card`, `--card-foreground`, `--primary`, `--primary-foreground`, `--secondary`, `--secondary-foreground`, `--muted`, `--muted-foreground`, `--border`, `--ring`, `--radius`
+- Theme variables: `--foreground`, `--card`, `--card-foreground`, `--muted`, `--ring`, `--radius`
 - Docs: `/morphing-popover` on the Morph UI site
 
 ## Morph Dialog
@@ -41,7 +41,7 @@ A card grows into a modal dialog and folds back when it closes.
 
 - Component: `assets/components/morph-dialog.tsx`
 - Example: `assets/examples/morph-dialog.tsx`
-- Exports: `MorphDialog`
+- Exports: `MorphDialog`, `MorphDialogTrigger`, `MorphDialogContent`, `MorphDialogTitle`, `MorphDialogDescription`, `MorphDialogClose`
 - Classes: `vt-move`, `vt-expand`, `vt-quick`
 - Theme variables: `--background`, `--foreground`, `--card`, `--card-foreground`, `--muted`, `--muted-foreground`, `--ring`, `--radius`
 - Docs: `/morph-dialog` on the Morph UI site
@@ -96,7 +96,7 @@ The underline glides to your tab; the panel slides the same way.
 
 - Component: `assets/components/tabs.tsx`
 - Example: `assets/examples/tabs.tsx`
-- Exports: `Tab`, `Tabs`
+- Exports: `Tabs`, `TabsList`, `TabsTrigger`, `TabsContent`
 - Classes: `vt-move`, `vt-quick`, `vt-slide`, `vt-clip`, `vt-forward`, `vt-back`
 - Theme variables: `--foreground`, `--muted-foreground`, `--border`, `--ring`, `--radius`
 - Docs: `/tabs` on the Morph UI site
@@ -107,7 +107,7 @@ Cards slide by like a track, with arrows or dots.
 
 - Component: `assets/components/carousel.tsx`
 - Example: `assets/examples/carousel.tsx`
-- Exports: `Slide`, `Carousel`
+- Exports: `Carousel`, `CarouselContent`, `CarouselItem`, `CarouselPrevious`, `CarouselNext`, `CarouselDots`
 - Classes: `vt-swipe`, `vt-forward`, `vt-back`
 - Theme variables: `--background`, `--foreground`, `--card`, `--card-foreground`, `--muted`, `--muted-foreground`, `--border`, `--ring`, `--radius`
 - Docs: `/carousel` on the Morph UI site

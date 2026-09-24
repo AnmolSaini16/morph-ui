@@ -156,9 +156,7 @@ export function PostList({ posts }: { posts: Post[] }) {
                       default: "vt-move vt-expand",
                     }}
                   >
-                    <div
-                      className={`flex items-center gap-4 p-3 transition-shadow hover:ring-foreground/20 ${card}`}
-                    >
+                    <div className={`flex items-center gap-4 p-3 hover:ring-foreground/20 ${card}`}>
                       <ViewTransition
                         name={name(post, "cover")}
                         share={{

@@ -1,7 +1,14 @@
 "use client"
 
 import { useState } from "react"
-import { MorphDialog } from "@/registry/morph-dialog"
+import {
+  MorphDialog,
+  MorphDialogClose,
+  MorphDialogContent,
+  MorphDialogDescription,
+  MorphDialogTitle,
+  MorphDialogTrigger,
+} from "@/registry/morph-dialog"
 
 const icon = {
   width: 16,
@@ -35,12 +42,8 @@ export default function MorphDialogDemo() {
     .slice(0, 2)
 
   return (
-    <MorphDialog
-      title="Edit profile"
-      description="Make changes to your profile here. Click save when you're done."
-      className="w-72 p-3"
-      overlayClassName="md:pl-(--sidebar-width)"
-      trigger={
+    <MorphDialog>
+      <MorphDialogTrigger className="w-72 p-3">
         <span className="flex items-center gap-3">
           <span className="grid size-10 shrink-0 place-items-center rounded-full bg-muted text-sm font-medium text-muted-foreground">
             {initials}
@@ -53,10 +56,14 @@ export default function MorphDialogDemo() {
           </span>
           <Pencil className="size-4 shrink-0 text-muted-foreground" />
         </span>
-      }
-    >
-      {(close) => (
+      </MorphDialogTrigger>
+      <MorphDialogContent>
+        <MorphDialogTitle>Edit profile</MorphDialogTitle>
+        <MorphDialogDescription>
+          Make changes to your profile here. Click save when you&apos;re done.
+        </MorphDialogDescription>
         <form
+          className="mt-4"
           onSubmit={(e) => {
             e.preventDefault()
             const data = new FormData(e.currentTarget)
@@ -64,7 +71,6 @@ export default function MorphDialogDemo() {
               name: String(data.get("name")).trim() || profile.name,
               username: String(data.get("username")).trim() || profile.username,
             })
-            close()
           }}
         >
           <label className="block text-sm font-medium">
@@ -76,22 +82,20 @@ export default function MorphDialogDemo() {
             <input name="username" defaultValue={profile.username} className={input} />
           </label>
           <div className="mt-5 flex justify-end gap-2">
-            <button
-              type="button"
-              onClick={close}
+            <MorphDialogClose
               className={`${button} bg-secondary text-secondary-foreground hover:bg-secondary/80`}
             >
               Cancel
-            </button>
-            <button
+            </MorphDialogClose>
+            <MorphDialogClose
               type="submit"
               className={`${button} bg-primary text-primary-foreground hover:bg-primary/80`}
             >
               Save changes
-            </button>
+            </MorphDialogClose>
           </div>
         </form>
-      )}
+      </MorphDialogContent>
     </MorphDialog>
   )
 }

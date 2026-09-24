@@ -1,6 +1,6 @@
 "use client"
 
-import { Tabs, type Tab } from "@/registry/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/registry/tabs"
 
 const stats = [
   ["Visitors", "12.4k"],
@@ -14,7 +14,7 @@ const activity = [
   ["Lee", "deployed", "v2.3.0 to production"],
 ]
 
-const tabs: Tab[] = [
+const tabs = [
   {
     id: "overview",
     label: "Overview",
@@ -76,5 +76,20 @@ const tabs: Tab[] = [
 ]
 
 export default function TabsDemo() {
-  return <Tabs tabs={tabs} />
+  return (
+    <Tabs defaultValue="overview">
+      <TabsList>
+        {tabs.map((tab) => (
+          <TabsTrigger key={tab.id} value={tab.id}>
+            {tab.label}
+          </TabsTrigger>
+        ))}
+      </TabsList>
+      {tabs.map((tab) => (
+        <TabsContent key={tab.id} value={tab.id}>
+          {tab.content}
+        </TabsContent>
+      ))}
+    </Tabs>
+  )
 }
