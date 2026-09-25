@@ -205,6 +205,28 @@
   animation-timeline: --code;
   animation-range: 0px 24px;
 }
+/* Mobile chip row: each edge fades in only while there are chips hidden past it. Without
+   scroll timelines, only the end fade shows, as a hint that the row scrolls. */
+.chips-fade-start {
+  opacity: 0;
+}
+@supports (animation-timeline: scroll()) {
+  .chips-fade-start {
+    animation: code-fade-top linear both;
+    animation-timeline: --chips;
+    animation-range: 0px 24px;
+  }
+  .chips-fade-end {
+    animation: chips-fade-end linear both;
+    animation-timeline: --chips;
+    animation-range: calc(100% - 24px) 100%;
+  }
+}
+@keyframes chips-fade-end {
+  to {
+    opacity: 0;
+  }
+}
 @keyframes code-fade-top {
   to {
     opacity: 1;

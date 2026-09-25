@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useRef } from "react"
 import {
   Sidebar,
   SidebarContent,
@@ -91,12 +92,24 @@ export function AppSidebar() {
 
 export function MobileNav() {
   const { selected } = useNavigation()
+  const navRef = useRef<HTMLElement>(null)
   const links = [
     { slug: "", title: "Introduction" },
     { slug: "getting-started", title: "Getting started" },
     { slug: "skill", title: "Skill" },
     ...entries,
   ]
+
+  // Start with the current page's chip in view. After that the strip only moves when
+  // it's swiped, so tapping a chip never shifts the row under the finger.
+  useEffect(() => {
+    const nav = navRef.current
+    const chip = nav?.querySelector<HTMLElement>("[aria-current=page]")
+    if (!nav || !chip) return
+    if (chip.offsetLeft + chip.offsetWidth > nav.clientWidth) {
+      nav.scrollLeft = chip.offsetLeft - (nav.clientWidth - chip.offsetWidth) / 2
+    }
+  }, [])
 
   return (
     <header className="sticky top-0 z-20 border-b bg-sidebar/95 backdrop-blur md:hidden">
@@ -110,29 +123,39 @@ export function MobileNav() {
           <ThemeToggle />
         </div>
       </div>
-      <nav className="flex [scrollbar-width:none] gap-1 overflow-x-auto px-3 pb-2.5 [&::-webkit-scrollbar]:hidden">
-        {links.map((link) => {
-          const active = selected === `/${link.slug}`
-          return (
-            <DocsLink
-              key={link.slug}
-              href={`/${link.slug}`}
-              aria-current={active ? "page" : undefined}
-              ref={(el) => {
-                if (active) el?.scrollIntoView({ block: "nearest", inline: "center" })
-              }}
-              className={
-                "shrink-0 rounded-md px-2.5 py-1 text-[13px] transition-colors " +
-                (active
-                  ? "bg-muted text-foreground"
-                  : "text-muted-foreground hover:text-foreground")
-              }
-            >
-              {link.title}
-            </DocsLink>
-          )
-        })}
-      </nav>
+      <div className="relative [timeline-scope:--chips]">
+        <nav
+          ref={navRef}
+          className="flex [scroll-timeline:--chips_inline] [scrollbar-width:none] gap-1 overflow-x-auto px-3 pb-2.5 [&::-webkit-scrollbar]:hidden"
+        >
+          {links.map((link) => {
+            const active = selected === `/${link.slug}`
+            return (
+              <DocsLink
+                key={link.slug}
+                href={`/${link.slug}`}
+                aria-current={active ? "page" : undefined}
+                className={
+                  "shrink-0 rounded-md px-2.5 py-1 text-[13px] transition-colors " +
+                  (active
+                    ? "bg-muted text-foreground"
+                    : "text-muted-foreground hover:text-foreground")
+                }
+              >
+                {link.title}
+              </DocsLink>
+            )
+          })}
+        </nav>
+        <div
+          aria-hidden
+          className="chips-fade-start pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-sidebar to-transparent"
+        />
+        <div
+          aria-hidden
+          className="chips-fade-end pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-sidebar to-transparent"
+        />
+      </div>
     </header>
   )
 }
