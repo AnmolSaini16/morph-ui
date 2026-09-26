@@ -42,6 +42,14 @@ export const entries: Entry[] = [
     uses: ["name + share", "<dialog>", "vt-expand", "vt-quick"],
   },
   {
+    slug: "mini-player",
+    category: "Morphs",
+    title: "Mini Player",
+    description:
+      "The bottom bar grows into the full player; art, title and controls fly into place.",
+    uses: ["name + share", "addTransitionType", "vt-expand", "vt-slide", "vt-short"],
+  },
+  {
     slug: "number-flip",
     category: "Morphs",
     title: "Number Flip",

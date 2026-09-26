@@ -46,6 +46,17 @@ A card grows into a modal dialog and folds back when it closes.
 - Theme variables: `--background`, `--foreground`, `--card`, `--card-foreground`, `--muted`, `--muted-foreground`, `--ring`, `--radius`
 - Docs: `/morph-dialog` on the Morph UI site
 
+## Mini Player
+
+The bottom bar grows into the full player; art, title and controls fly into place.
+
+- Component: `assets/components/mini-player.tsx`
+- Example: `assets/examples/mini-player.tsx`
+- Exports: `Track`, `MiniPlayer`
+- Classes: `vt-move`, `vt-expand`, `vt-cover`, `vt-text`, `vt-center`, `vt-quick`, `vt-slide`, `vt-short`, `vt-forward`, `vt-back`
+- Theme variables: `--background`, `--foreground`, `--card`, `--card-foreground`, `--muted`, `--muted-foreground`, `--border`, `--ring`, `--radius`
+- Docs: `/mini-player` on the Morph UI site
+
 ## Number Flip
 
 Changed digits roll a full line, with an optional stagger.

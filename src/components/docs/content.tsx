@@ -17,7 +17,7 @@ export function CodeCard({ code, file, plain }: { code: string; file?: string; p
 
 export function InlineCode({ children }: { children: ReactNode }) {
   return (
-    <code className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[13px] text-foreground">
+    <code className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[13px] whitespace-nowrap text-foreground">
       {children}
     </code>
   )

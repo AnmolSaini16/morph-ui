@@ -1,6 +1,6 @@
 # 001 — Close the blank gap in the step slide (`vt-slide`)
 
-- **Status**: TODO
+- **Status**: DONE (2026-09-26, with the Mini Player work; the old fade uses vt-dissolve-out, which the quoted rules predate)
 - **Commit**: none (not a git repository); written 2026-09-24 against the files quoted below
 - **Severity**: HIGH
 - **Category**: Easing & duration

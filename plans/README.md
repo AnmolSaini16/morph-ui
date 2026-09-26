@@ -4,7 +4,7 @@ Written 2026-09-24 by an animation audit, measured against Emil Kowalski's anima
 
 | #   | Plan                                                                                         | Severity | Status | Depends on                                 |
 | --- | -------------------------------------------------------------------------------------------- | -------- | ------ | ------------------------------------------ |
-| 001 | [Close the blank gap in the step slide](001-step-slide-crossfade-gap.md)                     | HIGH     | TODO   | —                                          |
+| 001 | [Close the blank gap in the step slide](001-step-slide-crossfade-gap.md)                     | HIGH     | DONE   | —                                          |
 | 002 | [Make every duration tunable through settings](002-duration-settings.md)                     | MEDIUM   | TODO   | 001                                        |
 | 003 | [Add press feedback to buttons](003-press-feedback.md)                                       | MEDIUM   | TODO   | —                                          |
 | 004 | [Stop List Switcher's descriptions leaving too early](004-list-switcher-description-exit.md) | LOW      | TODO   | — (reuses 001's measuring script)          |

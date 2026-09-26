@@ -5,6 +5,7 @@ import AnimatedListDemo from "./examples/animated-list"
 import CarouselDemo from "./examples/carousel"
 import DynamicIslandDemo from "./examples/dynamic-island"
 import ListSwitcherDemo from "./examples/list-switcher"
+import MiniPlayerDemo from "./examples/mini-player"
 import MorphDialogDemo from "./examples/morph-dialog"
 import MorphingPopoverDemo from "./examples/morphing-popover"
 import NumberFlipDemo from "./examples/number-flip"
@@ -20,6 +21,7 @@ const demos: Record<string, ComponentType> = {
   "dynamic-island": DynamicIslandDemo,
   "morphing-popover": MorphingPopoverDemo,
   "morph-dialog": MorphDialogDemo,
+  "mini-player": MiniPlayerDemo,
   "number-flip": NumberFlipDemo,
   "animated-list": AnimatedListDemo,
   "photo-grid": PhotoGridDemo,

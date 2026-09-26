@@ -49,6 +49,7 @@ Give them to `<ViewTransition>` and combine them: `update="vt-move vt-shell"`, `
 | Class | What it does |
 | --- | --- |
 | `vt-slide` | A short slide with a fade, for steps |
+| `vt-short` | With vt-slide: travels 8px instead of 48px, for a line of text |
 | `vt-swipe` | Full-width swap, like a carousel |
 | `vt-push` | An iOS-style stack push and pop |
 | `vt-roll` | Digits or words roll up or down |

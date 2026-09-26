@@ -1,6 +1,6 @@
 ---
 name: morph-ui
-description: Add Morph UI's animated React components and write view transitions with React's <ViewTransition> and the vt-* CSS classes. Use when the user wants a Morph UI component (post list, dynamic island, morphing popover, morph dialog, number flip, animated list, photo grid, list switcher, tabs, carousel, step wizard, stack navigator, page transition), or wants to animate UI changes in React 19.3+ without an animation library, such as shared-element morphs, list add/remove/reorder, directional slides, number rolls or route transitions in Next.js.
+description: Add Morph UI's animated React components and write view transitions with React's <ViewTransition> and the vt-* CSS classes. Use when the user wants a Morph UI component (post list, dynamic island, morphing popover, morph dialog, mini player, number flip, animated list, photo grid, list switcher, tabs, carousel, step wizard, stack navigator, page transition), or wants to animate UI changes in React 19.3+ without an animation library, such as shared-element morphs, list add/remove/reorder, directional slides, number rolls or route transitions in Next.js.
 ---
 
 # Morph UI
@@ -31,6 +31,7 @@ Components:
 - **Dynamic Island** (`dynamic-island`): One shape, many states. The pill expands and reveals its content.
 - **Morphing Popover** (`morphing-popover`): A button grows into a panel and folds back into the button.
 - **Morph Dialog** (`morph-dialog`): A card grows into a modal dialog and folds back when it closes.
+- **Mini Player** (`mini-player`): The bottom bar grows into the full player; art, title and controls fly into place.
 - **Number Flip** (`number-flip`): Changed digits roll a full line, with an optional stagger.
 - **Animated List** (`animated-list`): Add, remove, shuffle and sort with zero layout math.
 - **Photo Grid** (`photo-grid`): Photos pop in, shrink away and bounce into their new spots.

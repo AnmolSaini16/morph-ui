@@ -2,7 +2,6 @@
 
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
 import { entries } from "@/lib/entries"
 import { CodeCard, InlineCode, SubHeading } from "./content"
 import { REPO } from "./github-link"
@@ -12,19 +11,31 @@ import { PageHeader } from "./page-header"
 const installCommand = `npx skills add ${REPO}\n`
 
 const knows = [
-  [
-    "Installing components",
-    "Checks for React 19.3 and your theme, puts files where your project keeps them, and adds morph.css once.",
-  ],
-  [
-    "Writing transitions",
-    "Picks the right vt-* classes and follows the same rules as these components: clicks never wait, controls stay live, heights stay fixed.",
-  ],
-  [
-    "Recipes",
-    "Lists, shared elements, directional slides, number rolls, and route transitions in Next.js.",
-  ],
-  ["Tuning", "Changes timings and curves through the --vt-* settings, without editing morph.css."],
+  {
+    title: "Installing components",
+    body: (
+      <>
+        Adds components and <InlineCode>morph.css</InlineCode> to your project.
+      </>
+    ),
+  },
+  {
+    title: "Writing transitions",
+    body: (
+      <>
+        Picks the right <InlineCode>vt-*</InlineCode> classes and follows the same rules.
+      </>
+    ),
+  },
+  { title: "Recipes", body: "Lists, shared elements, slides and Next.js route transitions." },
+  {
+    title: "Tuning",
+    body: (
+      <>
+        Adjusts timing and easing through the <InlineCode>--vt-*</InlineCode> settings.
+      </>
+    ),
+  },
 ]
 
 const prompts = [
@@ -65,23 +76,22 @@ export function SkillPage() {
       </p>
 
       <SubHeading>What it knows</SubHeading>
-      <Card className="gap-0 divide-y py-0">
-        {knows.map(([title, body]) => (
-          <p key={title} className="px-4 py-3 text-sm">
-            <span className="font-medium">{title}.</span>{" "}
-            <span className="text-muted-foreground">{body}</span>
-          </p>
+      <ul className="list-disc space-y-2 pl-5 text-[15px] leading-7 text-muted-foreground marker:text-muted-foreground/50">
+        {knows.map(({ title, body }) => (
+          <li key={title}>
+            <span className="font-medium text-foreground">{title}.</span> {body}
+          </li>
         ))}
-      </Card>
+      </ul>
 
       <SubHeading>Try asking</SubHeading>
-      <ul className="space-y-2">
+      <p className="mb-3 text-[15px] leading-7 text-muted-foreground">
+        For example, you can ask your agent to:
+      </p>
+      <ul className="list-disc space-y-2 pl-5 text-[15px] leading-7 marker:text-muted-foreground/50">
         {prompts.map((prompt) => (
-          <li
-            key={prompt}
-            className="rounded-lg bg-muted px-3 py-2 font-mono text-[12px] text-foreground"
-          >
-            {prompt}
+          <li key={prompt}>
+            <em>&ldquo;{prompt}&rdquo;</em>
           </li>
         ))}
       </ul>

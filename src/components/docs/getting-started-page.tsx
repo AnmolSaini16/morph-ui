@@ -8,18 +8,28 @@ import { DocsLink } from "./navigation"
 import { PageHeader } from "./page-header"
 
 const steps = [
-  [
-    "Wrap",
-    "Put <ViewTransition> around what should animate, with a class for each kind of change.",
-  ],
-  [
-    "Update",
-    "Change state inside startTransition. addTransitionType tags direction, like next or back.",
-  ],
-  [
-    "Animate",
-    "The browser snapshots before and after. The motion lives in CSS, keyed by those classes.",
-  ],
+  {
+    title: "Wrap",
+    body: (
+      <>
+        Put <InlineCode>&lt;ViewTransition&gt;</InlineCode> around what animates, with a class per
+        change.
+      </>
+    ),
+  },
+  {
+    title: "Update",
+    body: (
+      <>
+        Change state in <InlineCode>startTransition</InlineCode>, tagged with{" "}
+        <InlineCode>addTransitionType</InlineCode>.
+      </>
+    ),
+  },
+  {
+    title: "Animate",
+    body: "The browser snapshots before and after, and your classes set the motion.",
+  },
 ]
 
 const settingsExample = `:root {
@@ -113,17 +123,18 @@ export function GettingStartedPage({ baseCss }: { baseCss: SourceFile }) {
       </p>
 
       <SubHeading>How it works</SubHeading>
-      <Card className="mb-6 gap-0 divide-y py-0">
-        {steps.map(([title, body], i) => (
-          <div key={title} className="flex gap-4 px-4 py-3 text-sm">
-            <span className="font-mono text-xs leading-5 text-muted-foreground">{i + 1}</span>
-            <p>
-              <span className="font-medium">{title}.</span>{" "}
-              <span className="text-muted-foreground">{body}</span>
-            </p>
-          </div>
+      <ol className="mb-6 space-y-3">
+        {steps.map(({ title, body }, i) => (
+          <li key={title} className="flex gap-3 text-[15px] leading-7">
+            <span className="mt-1 grid size-5 shrink-0 place-items-center rounded-full bg-muted font-mono leading-none text-[11px] text-muted-foreground">
+              {i + 1}
+            </span>
+            <span>
+              <span className="font-medium">{title}.</span> {body}
+            </span>
+          </li>
         ))}
-      </Card>
+      </ol>
 
       <p className="mb-4 text-[15px] leading-7 text-muted-foreground">
         React names the snapshots and schedules the browser transition, so components never collide.

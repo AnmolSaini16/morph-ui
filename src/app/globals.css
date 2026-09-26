@@ -8,7 +8,6 @@
 
 @theme inline {
   --color-code: var(--code);
-  --color-code-hover: color-mix(in oklab, var(--code), var(--foreground) 4%);
   --font-heading: var(--font-sans);
   --font-sans: var(--font-geist-sans), sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);

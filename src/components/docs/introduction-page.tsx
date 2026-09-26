@@ -60,7 +60,7 @@ export function IntroductionPage() {
           <section
             key={entry.slug}
             aria-labelledby={`${entry.slug}-title`}
-            className="flex min-w-0 flex-col rounded-2xl bg-code ring-[0.5px] ring-foreground/10 transition-colors has-[a:hover]:bg-code-hover"
+            className="flex min-w-0 flex-col rounded-2xl bg-code ring-[0.5px] ring-foreground/10 transition-colors dark:has-[a:hover]:bg-muted/50 has-[a:hover]:bg-muted"
           >
             <div className="flex h-[34rem] items-center justify-center rounded-2xl bg-background px-5 py-8 ring-[0.5px] ring-foreground/10">
               <Demo slug={entry.slug} />
