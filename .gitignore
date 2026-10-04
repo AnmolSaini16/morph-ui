@@ -31,3 +31,6 @@ next-env.d.ts
 
 # Cloudflare
 .wrangler
+
+# Claude Code local files
+.claude/
