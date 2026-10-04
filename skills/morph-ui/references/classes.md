@@ -39,6 +39,7 @@ Give them to `<ViewTransition>` and combine them: `update="vt-move vt-shell"`, `
 | --- | --- |
 | `vt-shell` | A card surface resizes; its contents animate on their own |
 | `vt-expand` | A card grows into a new layout, contents crossfade |
+| `vt-surface` | A card that only moves: its surface is painted for it, contents stay sharp |
 | `vt-inverse` | Makes vt-shell a pill in the inverse of your theme, like the Dynamic Island |
 | `vt-clip` | Clips snapshots; add view-transition-group: contain to clip nested groups |
 | `vt-scroll` | A scroll area: clips nested snapshots at its edges, with square corners |

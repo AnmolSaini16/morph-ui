@@ -78,6 +78,13 @@ export const entries: Entry[] = [
     uses: ["container queries", "vt-shell", "vt-text", "vt-fade"],
   },
   {
+    slug: "empty-state",
+    category: "Lists",
+    title: "Empty State",
+    description: "The first item grows out of the empty state's button and folds back into it.",
+    uses: ["name + share", "keyed boundaries", "vt-expand", "vt-presence", "vt-fade"],
+  },
+  {
     slug: "tabs",
     category: "Navigation",
     title: "Tabs",

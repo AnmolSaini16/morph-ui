@@ -101,6 +101,17 @@ Cards fold into a list; names and stats glide into place.
 - Theme variables: `--background`, `--foreground`, `--card`, `--card-foreground`, `--muted`, `--muted-foreground`, `--border`, `--input`, `--ring`, `--radius`
 - Docs: `/list-switcher` on the Morph UI site
 
+## Empty State
+
+The first item grows out of the empty state's button and folds back into it.
+
+- Component: `assets/components/empty-state.tsx`
+- Example: `assets/examples/empty-state.tsx`
+- Exports: `EmptyStateItem`, `EmptyState`
+- Classes: `vt-move`, `vt-expand`, `vt-surface`, `vt-presence`, `vt-fade`
+- Theme variables: `--background`, `--foreground`, `--card`, `--card-foreground`, `--muted`, `--muted-foreground`, `--border`, `--ring`, `--radius`
+- Docs: `/empty-state` on the Morph UI site
+
 ## Tabs
 
 The underline glides to your tab; the panel slides the same way.

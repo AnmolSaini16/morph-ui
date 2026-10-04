@@ -4,6 +4,7 @@ import type { ComponentType } from "react"
 import AnimatedListDemo from "./examples/animated-list"
 import CarouselDemo from "./examples/carousel"
 import DynamicIslandDemo from "./examples/dynamic-island"
+import EmptyStateDemo from "./examples/empty-state"
 import ListSwitcherDemo from "./examples/list-switcher"
 import MiniPlayerDemo from "./examples/mini-player"
 import MorphDialogDemo from "./examples/morph-dialog"
@@ -26,6 +27,7 @@ const demos: Record<string, ComponentType> = {
   "animated-list": AnimatedListDemo,
   "photo-grid": PhotoGridDemo,
   "list-switcher": ListSwitcherDemo,
+  "empty-state": EmptyStateDemo,
   tabs: TabsDemo,
   carousel: CarouselDemo,
   "step-wizard": StepWizardDemo,

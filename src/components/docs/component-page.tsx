@@ -27,6 +27,8 @@ const explanations: Record<string, string> = {
     "Each digit has a stable key based on its position from the right. Changed digits roll a full line in the direction of the value change. They start immediately; enable stagger for a short carry effect on slower updates.",
   "animated-list":
     "Stable item keys let React match rows before and after a reorder. Existing rows move to their new positions; only inserted or removed rows receive the presence animation.",
+  "empty-state":
+    "The empty state's button and the first row share a name, so creating the first item grows the button into that row, and removing the last row folds it back. Later rows rise in with vt-presence; rows that shift move with vt-surface, which keeps their text sharp. Remove buttons sit outside the animated rows, so they stay clickable.",
   "photo-grid":
     "Stable photo keys preserve identity across shuffles. Added and removed photos scale and fade, while the rest move to their new spots with the same bounce curve.",
   tabs: "The underline is one named boundary rendered inside whichever tab is active. Moving it to another tab pairs the old and new underline, so it glides and stretches between them. The click adds a next or previous transition type, and the panel slides in that direction.",

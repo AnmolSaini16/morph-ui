@@ -1,6 +1,6 @@
 ---
 name: morph-ui
-description: Add Morph UI's animated React components and write view transitions with React's <ViewTransition> and the vt-* CSS classes. Use when the user wants a Morph UI component (post list, dynamic island, morphing popover, morph dialog, mini player, number flip, animated list, photo grid, list switcher, tabs, carousel, step wizard, stack navigator, page transition), or wants to animate UI changes in React 19.3+ without an animation library, such as shared-element morphs, list add/remove/reorder, directional slides, number rolls or route transitions in Next.js.
+description: Add Morph UI's animated React components and write view transitions with React's <ViewTransition> and the vt-* CSS classes. Use when the user wants a Morph UI component (post list, dynamic island, morphing popover, morph dialog, mini player, number flip, animated list, photo grid, list switcher, empty state, tabs, carousel, step wizard, stack navigator, page transition), or wants to animate UI changes in React 19.3+ without an animation library, such as shared-element morphs, list add/remove/reorder, directional slides, number rolls or route transitions in Next.js.
 ---
 
 # Morph UI
@@ -36,6 +36,7 @@ Components:
 - **Animated List** (`animated-list`): Add, remove, shuffle and sort with zero layout math.
 - **Photo Grid** (`photo-grid`): Photos pop in, shrink away and bounce into their new spots.
 - **List Switcher** (`list-switcher`): Cards fold into a list; names and stats glide into place.
+- **Empty State** (`empty-state`): The first item grows out of the empty state's button and folds back into it.
 - **Tabs** (`tabs`): The underline glides to your tab; the panel slides the same way.
 - **Carousel** (`carousel`): Cards slide by like a track, with arrows or dots.
 - **Step Wizard** (`step-wizard`): Steps slide the way you move, forward or back.
@@ -80,7 +81,7 @@ Rules that matter:
 - **`enter` and `exit` fire only on the outermost `<ViewTransition>`** of an inserted or removed subtree, and it must wrap a DOM element directly. Give list items stable keys: `<ViewTransition key={item.id} default="vt-move vt-presence">`.
 - **Shared elements:** the same `name` on the old and new element, plus `share="vt-move"` (or `vt-morph`, `vt-expand`). Namespace names with `useId()` so two instances never pair. Both sides must be nested the same way.
 - **Direction:** `addTransitionType("step-next")` inside `startTransition`, mapped with `update={{ "step-next": "vt-slide vt-forward", "step-back": "vt-slide vt-back", default: "none" }}`.
-- **Keep controls outside the boundary.** Elements inside a `<ViewTransition>` are replaced by a snapshot while it animates.
+- **Keep controls outside the boundary.** Elements inside a `<ViewTransition>` are replaced by a snapshot while it animates, and ignore clicks until the whole view transition ends. That includes anything inside a captured ancestor, such as a scroll area that is itself a boundary.
 - **Snapshots paint above the whole page.** A moving snapshot covers anything it passes over. A tab highlight behind the labels would hide them, so use an underline instead.
 - **Fixed heights** around anything that grows or shrinks, so the page doesn't jump.
 - **Next.js routes:** use a `<ViewTransition>` keyed by `usePathname()` (`references/patterns.md`), not `app/template.tsx`, which doesn't re-mount for nested routes.

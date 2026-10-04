@@ -318,7 +318,8 @@
 /* ── Surfaces: cards that resize without stretching ──────────── */
 
 ::view-transition-group(.vt-shell),
-::view-transition-group(.vt-expand) {
+::view-transition-group(.vt-expand),
+::view-transition-group(.vt-surface) {
   background: var(--vt-surface, var(--card));
   border-radius: var(--vt-radius, calc(var(--radius) * 1.4));
   box-shadow: 0 0 0 1px var(--vt-ring, color-mix(in oklab, var(--foreground) 10%, transparent));
@@ -335,12 +336,15 @@
   box-shadow: none;
 }
 
-::view-transition-image-pair(.vt-expand) {
+::view-transition-image-pair(.vt-expand),
+::view-transition-image-pair(.vt-surface) {
   overflow: clip;
   border-radius: var(--vt-radius, calc(var(--radius) * 1.4));
 }
 ::view-transition-old(.vt-expand),
-::view-transition-new(.vt-expand) {
+::view-transition-new(.vt-expand),
+::view-transition-old(.vt-surface),
+::view-transition-new(.vt-surface) {
   width: 100%;
   height: 100%;
   object-fit: none;

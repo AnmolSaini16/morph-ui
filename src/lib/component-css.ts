@@ -38,6 +38,7 @@ export const componentClasses: Record<string, string[]> = {
     "vt-fade",
     "vt-delay-3",
   ],
+  "empty-state": ["vt-move", "vt-expand", "vt-surface", "vt-presence", "vt-fade"],
   tabs: ["vt-move", "vt-quick", "vt-slide", "vt-clip", "vt-forward", "vt-back"],
   carousel: ["vt-swipe", "vt-forward", "vt-back"],
   "step-wizard": ["vt-slide", "vt-clip", "vt-forward", "vt-back"],
