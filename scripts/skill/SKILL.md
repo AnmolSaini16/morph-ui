@@ -67,7 +67,7 @@ Rules that matter:
 - **`enter` and `exit` fire only on the outermost `<ViewTransition>`** of an inserted or removed subtree, and it must wrap a DOM element directly. Give list items stable keys: `<ViewTransition key={item.id} default="vt-move vt-presence">`.
 - **Shared elements:** the same `name` on the old and new element, plus `share="vt-move"` (or `vt-morph`, `vt-expand`). Namespace names with `useId()` so two instances never pair. Both sides must be nested the same way.
 - **Direction:** `addTransitionType("step-next")` inside `startTransition`, mapped with `update={{ "step-next": "vt-slide vt-forward", "step-back": "vt-slide vt-back", default: "none" }}`.
-- **Keep controls outside the boundary.** Elements inside a `<ViewTransition>` are replaced by a snapshot while it animates.
+- **Keep controls outside the boundary.** Elements inside a `<ViewTransition>` are replaced by a snapshot while it animates, and ignore clicks until the whole view transition ends. That includes anything inside a captured ancestor, such as a scroll area that is itself a boundary.
 - **Snapshots paint above the whole page.** A moving snapshot covers anything it passes over. A tab highlight behind the labels would hide them, so use an underline instead.
 - **Fixed heights** around anything that grows or shrinks, so the page doesn't jump.
 - **Next.js routes:** use a `<ViewTransition>` keyed by `usePathname()` (`references/patterns.md`), not `app/template.tsx`, which doesn't re-mount for nested routes.
