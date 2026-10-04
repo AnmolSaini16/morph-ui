@@ -26,9 +26,9 @@ const explanations: Record<string, string> = {
   "number-flip":
     "Each digit has a stable key based on its position from the right. Changed digits roll a full line in the direction of the value change. They start immediately; enable stagger for a short carry effect on slower updates.",
   "animated-list":
-    "Stable item keys let React match rows before and after a reorder. Existing rows move to their new positions; only inserted or removed rows receive the presence animation.",
+    "AnimatedListItem takes any content. Stable keys let React match rows across a reorder: existing rows move, and only added or removed rows get the presence animation. An item's action is drawn in the row and again in a live layer on top, so it stays clickable while rows animate. Rows share one height, set with rowHeight.",
   "empty-state":
-    "The empty state's button and the first row share a name, so creating the first item grows the button into that row, and removing the last row folds it back. Later rows rise in with vt-presence; rows that shift move with vt-surface, which keeps their text sharp. Remove buttons sit outside the animated rows, so they stay clickable.",
+    "Empty and its parts follow shadcn's composition; EmptyState wraps them with the list and takes the item ids. EmptyAction and the first EmptyItem share a name, so creating the first item grows the button into it, and removing the last one folds it back. An item's action is drawn twice in the same spot: once inside the item, so it travels with it, and once live on top, so it stays clickable while items animate.",
   "photo-grid":
     "Stable photo keys preserve identity across shuffles. Added and removed photos scale and fade, while the rest move to their new spots with the same bounce curve.",
   tabs: "The underline is one named boundary rendered inside whichever tab is active. Moving it to another tab pairs the old and new underline, so it glides and stretches between them. The click adds a next or previous transition type, and the panel slides in that direction.",
@@ -37,7 +37,7 @@ const explanations: Record<string, string> = {
   carousel:
     "The click adds a next or previous transition type. CSS slides the two snapshots in that direction and clips their travel to the card’s footprint; controls remain outside the snapshot. Arrow keys switch instantly, without the slide.",
   "step-wizard":
-    "Next and Back select directional CSS through addTransitionType. Only the step content is captured, leaving the progress indicator and buttons interactive.",
+    "StepWizardContent shows one StepWizardStep at a time, so a step can hold anything, a form included. Next and Back add a transition type that slides the content that way; the progress and buttons sit outside it and stay clickable. useStepWizard gives you the step, next and back for your own controls.",
   "stack-navigator":
     "Push moves a new screen over the old one; Pop reverses their roles with separate exit easing. The header and conversation travel as one screen inside a fixed frame. Back sits inside the chat header: its icon travels with the screen, while a live button outside the captured boundary can interrupt a slide.",
   "page-transition":

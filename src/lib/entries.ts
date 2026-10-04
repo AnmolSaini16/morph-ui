@@ -61,7 +61,7 @@ export const entries: Entry[] = [
     category: "Lists",
     title: "Animated List",
     description: "Add, remove, shuffle and sort with zero layout math.",
-    uses: ["keyed boundaries", "vt-move", "vt-presence"],
+    uses: ["composable parts", "keyed boundaries", "vt-move", "vt-presence"],
   },
   {
     slug: "photo-grid",
@@ -82,7 +82,7 @@ export const entries: Entry[] = [
     category: "Lists",
     title: "Empty State",
     description: "The first item grows out of the empty state's button and folds back into it.",
-    uses: ["name + share", "keyed boundaries", "vt-expand", "vt-presence", "vt-fade"],
+    uses: ["composable parts", "name + share", "vt-expand", "vt-surface", "vt-presence"],
   },
   {
     slug: "tabs",
@@ -103,7 +103,7 @@ export const entries: Entry[] = [
     category: "Navigation",
     title: "Step Wizard",
     description: "Steps slide the way you move, forward or back.",
-    uses: ["addTransitionType", "vt-slide"],
+    uses: ["composable parts", "addTransitionType", "vt-slide"],
   },
   {
     slug: "stack-navigator",

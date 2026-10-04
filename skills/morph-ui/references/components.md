@@ -74,9 +74,9 @@ Add, remove, shuffle and sort with zero layout math.
 
 - Component: `assets/components/animated-list.tsx`
 - Example: `assets/examples/animated-list.tsx`
-- Exports: `Task`, `AnimatedList`
+- Exports: `AnimatedListItem`, `AnimatedList`
 - Classes: `vt-move`, `vt-presence`, `vt-scroll`, `vt-edge-bottom`
-- Theme variables: `--background`, `--foreground`, `--card`, `--muted`, `--muted-foreground`, `--border`, `--ring`
+- Theme variables: `--foreground`, `--card`, `--muted-foreground`, `--border`
 - Docs: `/animated-list` on the Morph UI site
 
 ## Photo Grid
@@ -107,9 +107,9 @@ The first item grows out of the empty state's button and folds back into it.
 
 - Component: `assets/components/empty-state.tsx`
 - Example: `assets/examples/empty-state.tsx`
-- Exports: `EmptyStateItem`, `EmptyState`
+- Exports: `EmptyState`, `Empty`, `EmptyHeader`, `EmptyMedia`, `EmptyTitle`, `EmptyDescription`, `EmptyContent`, `EmptyAction`, `EmptyList`, `EmptyItem`
 - Classes: `vt-move`, `vt-expand`, `vt-surface`, `vt-presence`, `vt-fade`
-- Theme variables: `--background`, `--foreground`, `--card`, `--card-foreground`, `--muted`, `--muted-foreground`, `--border`, `--ring`, `--radius`
+- Theme variables: `--foreground`, `--card`, `--card-foreground`, `--muted`, `--muted-foreground`, `--border`, `--ring`, `--radius`
 - Docs: `/empty-state` on the Morph UI site
 
 ## Tabs
@@ -140,7 +140,7 @@ Steps slide the way you move, forward or back.
 
 - Component: `assets/components/step-wizard.tsx`
 - Example: `assets/examples/step-wizard.tsx`
-- Exports: `Step`, `StepWizard`
+- Exports: `useStepWizard`, `StepWizard`, `StepWizardProgress`, `StepWizardContent`, `StepWizardStep`, `StepWizardDone`, `StepWizardBack`, `StepWizardNext`
 - Classes: `vt-slide`, `vt-clip`, `vt-forward`, `vt-back`
 - Theme variables: `--background`, `--foreground`, `--card`, `--card-foreground`, `--primary`, `--primary-foreground`, `--secondary`, `--secondary-foreground`, `--muted`, `--muted-foreground`, `--border`, `--input`, `--ring`, `--radius`
 - Docs: `/step-wizard` on the Morph UI site

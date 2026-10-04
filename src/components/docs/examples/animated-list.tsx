@@ -1,7 +1,7 @@
 "use client"
 
 import { startTransition, useRef, useState } from "react"
-import { AnimatedList, type Task } from "@/registry/animated-list"
+import { AnimatedList, AnimatedListItem } from "@/registry/animated-list"
 
 const icon = {
   width: 16,
@@ -29,6 +29,12 @@ const Plus = ({ className }: { className?: string }) => (
     <path d="M3.5 8h9" />
   </svg>
 )
+const X = ({ className }: { className?: string }) => (
+  <svg {...icon} className={className}>
+    <path d="M4.5 4.5l7 7" />
+    <path d="M11.5 4.5l-7 7" />
+  </svg>
+)
 const Shuffle = ({ className }: { className?: string }) => (
   <svg {...icon} className={className}>
     <path d="M2.5 4.5h1.9c1 0 1.9.5 2.5 1.3l2.2 3.4c.6.8 1.5 1.3 2.5 1.3h1.9" />
@@ -47,6 +53,13 @@ function animate(update: () => void) {
 const button =
   "inline-flex shrink-0 cursor-pointer items-center justify-center font-medium whitespace-nowrap transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 h-7 gap-1 rounded-md px-2.5 text-[0.8rem] border bg-background hover:bg-muted dark:border-input dark:bg-input/30 dark:hover:bg-input/50 [&_svg]:size-3.5"
 
+type Task = { id: number; title: string; priority: "urgent" | "high" | "low"; owner: string }
+
+const tone = {
+  urgent: "bg-foreground text-background",
+  high: "border border-border text-foreground",
+  low: "bg-muted text-muted-foreground",
+}
 const rank = { urgent: 0, high: 1, low: 2 }
 const priorities: Task["priority"][] = ["urgent", "high", "low"]
 const backlog = [
@@ -89,7 +102,8 @@ export default function AnimatedListDemo() {
   const shuffle = () => animate(() => setTasks((t) => [...t].sort(() => Math.random() - 0.5)))
   const sort = () =>
     animate(() => setTasks((t) => [...t].sort((a, b) => rank[a.priority] - rank[b.priority])))
-  const remove = (id: Task["id"]) => setTasks((t) => t.filter((task) => task.id !== id))
+  const remove = (id: Task["id"]) =>
+    animate(() => setTasks((t) => t.filter((task) => task.id !== id)))
 
   return (
     <div className="w-full max-w-sm">
@@ -104,7 +118,35 @@ export default function AnimatedListDemo() {
           <ArrowDownWideNarrow /> Sort
         </button>
       </div>
-      <AnimatedList tasks={tasks} onRemove={remove} />
+      <AnimatedList label="Tasks" empty="All clear. Add a task.">
+        {tasks.map((task) => (
+          <AnimatedListItem
+            key={task.id}
+            action={
+              <button
+                type="button"
+                aria-label={`Remove ${task.title}`}
+                onClick={() => remove(task.id)}
+                className="inline-flex size-7 cursor-pointer items-center justify-center rounded-md text-muted-foreground outline-none hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                <X className="size-3.5" />
+              </button>
+            }
+          >
+            <span className="grid size-6 shrink-0 place-items-center rounded-full bg-muted text-[10px] font-medium text-muted-foreground">
+              {task.owner}
+            </span>
+            <span className="min-w-0 flex-1 truncate" title={task.title}>
+              {task.title}
+            </span>
+            <span
+              className={`rounded-md px-1.5 py-0.5 text-[11px] font-medium ${tone[task.priority]}`}
+            >
+              {task.priority}
+            </span>
+          </AnimatedListItem>
+        ))}
+      </AnimatedList>
     </div>
   )
 }
